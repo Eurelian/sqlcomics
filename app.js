@@ -10,6 +10,7 @@ app.get("/", (req, res) =>
 	db.query("SELECT * FROM shirt").then((data) => res.json(data.rows))
 );
 
+// BLOG
 app.post("/blog", (req, res) => {
 	const {
 		blog_title,
@@ -42,6 +43,15 @@ app.post("/blog", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+app.delete("/blog/:blog_id", (req, res) => {
+	const { blog_id } = req.params;
+	db.query("DELETE FROM blog WHERE blog_id=$1", [blog_id]).then((data) =>
+		res.json(data.rows).catch((err) => console.error(err))
+	);
+});
+
+// BOOK
+
 app.post("/book", (req, res) => {
 	const {
 		book_image,
@@ -71,6 +81,15 @@ app.post("/book", (req, res) => {
 		.then((data) => res.json(data.rows))
 		.catch((err) => console.log(err));
 });
+
+app.delete("/book/:book_id", (req, res) => {
+	const { book_id } = req.params;
+	db.query("DELETE FROM book WHERE book_id=$1", [book_id]).then((data) =>
+		res.json(data.rows).catch((err) => console.error(err))
+	);
+});
+
+// MUG
 
 app.post("/mug", (req, res) => {
 	const {
@@ -102,6 +121,14 @@ app.post("/mug", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+app.delete("/mug/:mug_id", (req, res) => {
+	const { mug_id } = req.params;
+	db.query("DELETE FROM mug WHERE mug_id=$1", [mug_id]).then((data) =>
+		res.json(data.rows).catch((err) => console.error(err))
+	);
+});
+
+// SHIRT
 app.post("/shirt", (req, res) => {
 	const {
 		shirt_image,
@@ -130,6 +157,13 @@ app.post("/shirt", (req, res) => {
 	)
 		.then((data) => res.json(data.rows))
 		.catch((err) => console.log(err));
+});
+
+app.delete("/shirt/:shirt_id", (req, res) => {
+	const { shirt_id } = req.params;
+	db.query("DELETE FROM shirt WHERE shirt_id=$1", [shirt_id]).then((data) =>
+		res.json(data.rows).catch((err) => console.error(err))
+	);
 });
 
 const port = process.env.PORT || 3000;
